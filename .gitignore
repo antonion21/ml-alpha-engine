@@ -1,0 +1,11 @@
+# python etc.
+__pycache__/
+*.py[cod]
+*venv/
+.env
+
+# data
+data/*.csv
+data/*.parquet
+
+.vscode/
