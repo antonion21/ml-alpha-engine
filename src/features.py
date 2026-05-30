@@ -6,6 +6,12 @@ def engineer_features(df):
     # ensures no lookahead bias by only using historical rolling windows
     df = df.copy()
     
+    # data cleaning fix for yfinance
+    # forces column to be numbers, turns text like "SPY" into NaN
+    df['Close'] = pd.to_numeric(df['Close'], errors='coerce')
+    # drops the NaN rows
+    df.dropna(subset=['Close'], inplace=True)
+    
     # log returns (QF standard for stationarity)
     df['log_return'] = np.log(df['Close'] / df['Close'].shift(1))
     
@@ -34,7 +40,7 @@ if __name__ == "__main__":
     
     if os.path.exists(file_path):
         print("Loading data...")
-        data = pd.read_csv(file_path, index_col="Date", parse_dates=True)
+        data = pd.read_csv(file_path, index_col=0, parse_dates=True)
         
         print("Engineering features...")
         featured_data = engineer_features(data)

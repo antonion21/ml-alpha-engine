@@ -58,7 +58,7 @@ if __name__ == "__main__":
         print("Data not found. Fetching now...")
         fetch_and_save_data("SPY", "2015-01-01", "2024-01-01")
         
-    df_raw = pd.read_csv(file_path, index_col="Date", parse_dates=True)
+    df_raw = pd.read_csv(file_path, index_col=0, parse_dates=True)
     df_features = engineer_features(df_raw)
     
     # define features and target exactly as in baseline.py
