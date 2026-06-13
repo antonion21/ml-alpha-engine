@@ -11,7 +11,7 @@ int main() {
     int out_num_iterations;
     
     // path to model.txt
-    int result = BoosterCreateFromModelfile("models/lgbm_model.txt", &out_num_iterations, &handle);
+    int result = LGBM_BoosterCreateFromModelfile("models/lgbm_model.txt", &out_num_iterations, &handle);
 
     if (result != 0) {
         std::cerr << "[Error] Could not load model. Does models/lgbm_model.txt exist?" << std::endl;
@@ -30,7 +30,7 @@ int main() {
     int64_t out_len;
 
     // call LGBM C-API
-    result = BoosterPredictForMat(
+    result = LGBM_BoosterPredictForMat(
         handle,
         in_p,
         C_API_DTYPE_FLOAT64,
@@ -47,7 +47,7 @@ int main() {
 
     if (result != 0) {
         std::cerr << "[Error] Prediction failed!" << std::endl;
-        BoosterFree(handle);
+        LGBM_BoosterFree(handle);
         return -1;
     }
 
@@ -68,6 +68,6 @@ int main() {
     std::cout << "==================================\n" << std::endl;
 
     // free memory safely
-    BoosterFree(handle);
+    LGBM_BoosterFree(handle);
     return 0;
 }
